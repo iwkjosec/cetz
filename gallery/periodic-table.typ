@@ -257,7 +257,14 @@
       let data = elements.at(period - 1).at(group - 1)
       if data != none {
         if data.len() == 5 {
-          content(pos(group, period), element(..data.slice(0, 4), fill: data.at(4)))
+          content(
+            pos(group, period),
+            if period == 7 and group >= 4 { 
+              synthetic-element(..data.slice(0, 4), fill: data.at(4))
+            } else {
+              element(..data.slice(0, 4), fill: data.at(4))
+            }
+          )
         } else {
           content(pos(group, period), element(..data))
         }
@@ -274,7 +281,7 @@
   for (idx, data) in actinides.enumerate() {
     content(
       special-pos(89 + idx, is-actinide: true),
-      if idx <= 3 { element(..data, fill: colors.lanthanide) } else {
+      if idx <= 5 { element(..data, fill: colors.lanthanide) } else {
         synthetic-element(..data, fill: colors.lanthanide)
       },
     )
